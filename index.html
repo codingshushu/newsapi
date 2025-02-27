@@ -14,11 +14,29 @@
   </head>
   <body>
     <class="container">
-        <i class="fa-solid fa-magnifying-glass" onclick="openSearchBox()" aria-hidden="true"></i>
+      <div>
+        <div class = "nav-icons">
+        <span class = "hamburger" onclick="openNav()"><i class="fa-solid fa-bars"></i></span>
+        <i class="fa-solid fa-magnifying-glass" id ="open-search-box" aria-hidden="true"></i>
         <span id="input-area" style="display: none;">
             <input type="text" id="search-input" placeholder="search" />
-            <button class="search-button" onclick="searchNews()">Go</button>
+            <button class="search-button">Go</button>
         </span>
+      </div>
+      <section>
+        <div id="mySidenav" class="sidenav">
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+          <a href="#">Business</a>
+          <a href="#">Entertainment</a>
+          <a href="#">General</a>
+          <a href="#">Health</a>
+          <a href="#">Science</a>
+          <a href="#">Sports</a>
+          <a href="#">Technology</a> 
+        </div> 
+      </section>
+       </div>
+
       <section>
         <div class = "head-line">
           <svg viewBox="0 0 184 25" fill="#000000" aria-hidden="true">
@@ -27,41 +45,16 @@
             ></path>
           </svg>
         </div>
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="https://newsapi.org/v2/top-headlines/sources?category=businessapiKey=76e5be7d251b4727a1f3145b3b7ba09c" id = "category-news">Sport</a>
-            <a href="#">Tech</a>
-            <a href="#">World</a>
-            <a href="#">Finance</a>
-            <a href="#">Politics</a>
-            <a href="#">Business</a>
-            <a href="#">Economics</a>
-            <a href="#">Entertainment</a>
-            <a href="#">Beauty</a>
-            <a href="#">Travel</a>
-            <a href="#">Music</a>
-            <a href="#">Food</a>
-            <a href="#">Science</a>
-            <a href="#">Gaming</a>
-            <a href="#">Energy</a>
-          </div>
-          <span class = "hamburger" onclick="openNav()"><i class="fa-solid fa-bars"></i></span>
+       
+        
         <div class = "menus">
-            <button>Sport</button>
-            <button>Tech</button>
-            <button>World</button>
-            <button>Finance</button>
-            <button>Politics</button>
-            <button>Business</button>
-            <button>Economics</button>
-            <button>Entertainment</button>
-            <button>Beauty</button>
-            <button>Travel</button>
-            <button>Music</button>
-            <button>Food</button>
-            <button>Science</button>
-            <button>Gaming</button>
-            <button>Energy</button>
+          <button>Business</button>
+          <button>Entertainment</button>
+          <button>General</button>
+          <button>Health</button>
+          <button>Science</button>
+          <button>Sports</button>
+          <button>Technology</button>
         </div>
       </section>
       <section id = "news-stand">
