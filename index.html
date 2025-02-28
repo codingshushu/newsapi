@@ -14,8 +14,7 @@
   </head>
   <body>
     <class="container">
-      <div>
-        <div class = "nav-icons">
+      <div class = "nav-icons">
         <span class = "hamburger" onclick="openNav()"><i class="fa-solid fa-bars"></i></span>
         <i class="fa-solid fa-magnifying-glass" id ="open-search-box" aria-hidden="true"></i>
         <span id="input-area" style="display: none;">
@@ -24,20 +23,6 @@
         </span>
       </div>
       <section>
-        <div id="mySidenav" class="sidenav">
-          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-          <a href="#">Business</a>
-          <a href="#">Entertainment</a>
-          <a href="#">General</a>
-          <a href="#">Health</a>
-          <a href="#">Science</a>
-          <a href="#">Sports</a>
-          <a href="#">Technology</a> 
-        </div> 
-      </section>
-       </div>
-
-      <section>
         <div class = "head-line">
           <svg viewBox="0 0 184 25" fill="#000000" aria-hidden="true">
             <path
@@ -45,8 +30,18 @@
             ></path>
           </svg>
         </div>
-       
-        
+        <section>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">Business</a>
+            <a href="#">Entertainment</a>
+            <a href="#">General</a>
+            <a href="#">Health</a>
+            <a href="#">Science</a>
+            <a href="#">Sports</a>
+            <a href="#">Technology</a>
+          </div>
+        </section>
         <div class = "menus">
           <button>Business</button>
           <button>Entertainment</button>
@@ -60,6 +55,11 @@
       <section id = "news-stand">
        
       </section>
+      <nav aria-label="Page navigation example" class = "pageNumbers-style">
+        <ul class="pagination">
+          
+        </ul>
+      </nav>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
     <script
