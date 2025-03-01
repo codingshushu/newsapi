@@ -29,12 +29,19 @@
 
 .news-img-size{
     max-width:100%;
-    max-height:250px;
+    max-height:250px; 
 }
 
-.news{
+.news-list{
     border-bottom: 2px solid black;
+    padding: 1em 5px;
+    
+}
 
+#news-stand .col-lg-4{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .pageNumbers-style{
@@ -88,6 +95,14 @@
   .pagination:hover{
     cursor:pointer;
   }
+
+  .pagination {
+    --bs-pagination-color: black;
+    --bs-pagination-hover-color:beige;
+    --bs-pagination-focus-color:beige;
+    --bs-pagination-active-bg:beige;
+    --bs-pagination-active-border-color:beige;
+}
 
   @media (max-width:992px){
     .menus{
