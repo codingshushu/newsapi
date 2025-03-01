@@ -14,7 +14,7 @@ let url = new URL(
 );
 const sideBar = document.querySelectorAll(".sidenav a");
 sideBar.forEach((menu) =>
-  menu.addEventListener("click", (event) => getNewsByCategory(event))
+  menu.addEventListener("click", (event) => getNewsByCategorySide(event))
 );
 let totalResults = 0;
 let page = 1;
@@ -52,7 +52,6 @@ const getLatestNews = async () => {
   console.log("uuu", url);
   await getNews();
 };
-getLatestNews();
 
 const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
@@ -67,7 +66,7 @@ const getNewsByCategorySide = async (event) => {
   const category = event.target.textContent.toLowerCase();
   console.log("category", category);
   url = new URL(
-    `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${API_KEY}`
+    `https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr&category=${category}`
   );
   await getNews();
 };
@@ -86,6 +85,11 @@ const textLimit = (text, limit) => {
 };
 
 const render = () => {
+  if (newsList.length === 0) {
+    errorRender("불러올 뉴스가 없습니다.");
+    return;
+  }
+
   let newsHTML = newsList
     .map((news) => {
       const newsTitle = news.title ? news.title : "제목 없음";
@@ -136,6 +140,7 @@ function openSearchBox() {
 }
 
 const paginationRender = () => {
+  let paginationHTML = ``;
   // totalResult,
   // page
   // pageSize
@@ -146,34 +151,63 @@ const paginationRender = () => {
   const pageGroup = Math.ceil(page / groupSize); //내가 보고있는 페이지 그룹. 6페이지를 보고 있으면 2번째 그룹, 196페이지 4번째 그룹 19.1 = 20
   // lastPage
   let lastPage = pageGroup * groupSize; //196개 results, 그룹 4 * 5 = 20
+
   // lastPage<totalPages의 경우 페이지는 계속 넘어가고 마지막 기사가 계속 표시됨
   if (lastPage > totalPages) {
     lastPage = totalPages;
   }
-  // firstPage  그룹1의 마지막 페이지는 5, 5-(5-1) =1, 그룹2의 마지막 페이지는 10, 10-(5-1)=6 그룹2의 첫페이지는 6
-  const firstPage =
-    lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
 
-  let paginationHTML = `<li class="page-item ${
-    page === 1 ? "disabled" : ""
-  }" onclick="moveToPage(1)"><a class="page-link" href="#"> << </a></li><li class="page-item  ${
-    page === 1 ? "disabled" : ""
-  }" onclick="moveToPage(${
-    page === 1 ? page : page - 1 // page-1만 있으면 -1,-2 페이지로 계속 넘어감.
-  })"><a class="page-link" href="#"> < </a></li> `; //previous 페이지 앞에 처음으로 아이콘 추가?
+  let last = pageGroup * 5;
+  if (last > totalPages) {
+    // 마지막 그룹이 5개 이하이면
+    last = totalPages;
+  }
+
+  // firstPage  그룹1의 마지막 페이지는 5, 5-(5-1) =1, 그룹2의 마지막 페이지는 10, 10-(5-1)=6 그룹2의 첫페이지는 6
+  const firstPage = last - 4 <= 0 ? 1 : last - 4;
+  // lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
+
+  // let paginationHTML = `<li class="page-item ${
+  //   page === 1 ? "disabled" : ""
+  // }" onclick="moveToPage(1)"><a class="page-link" href="#"> << </a></li><li class="page-item  ${
+  //   page === 1 ? "disabled" : ""
+  // }" onclick="moveToPage(${
+  //   page === 1 ? page : page - 1 // page-1만 있으면 -1,-2 페이지로 계속 넘어감.
+  // })"><a class="page-link" href="#"> < </a></li> `; //previous 페이지 앞에 처음으로 아이콘 추가?
+
+  // let visiblePages = Math.min(3, totalPages); // 최대 5개, 하지만 totalPages보다 많을 수 없음
+
+  // // 마지막 페이지 그룹의 남은 페이지 개수를 고려해서 visiblePages 조정
+  // if (lastPage - firstPage + 1 < visiblePages) {
+  //   visiblePages = lastPage - firstPage + 1;
+  // }
+
+  if (page > 1) {
+    paginationHTML = `<li class="page-item" onclick="moveToPage(1)"><a class="page-link" href="#"> &lt;&lt; </a></li>
+        <li class="page-item" onclick="moveToPage(${
+          page - 1
+        })"><a class="page-link" href="#">&lt;</a></li>`;
+  }
 
   for (let i = firstPage; i <= lastPage; i++) {
     paginationHTML += `<li class="page-item ${
       i === page ? "active" : ""
     }" onclick="moveToPage(${i})"><a class="page-link">${i}</a></li>`;
   }
-  paginationHTML += `<li class="page-item ${
-    page === totalPages ? "disabled" : ""
-  }" onclick="moveToPage(${
-    page === totalPages ? page : page + 1
-  })"><a class="page-link" href="#"> > </a></li><li class="page-item ${
-    page === totalPages ? "disabled" : ""
-  }" onclick="moveToPage(${totalPages})"><a class="page-link" href="#"> >> </a></li>`; //next아이콘 뒤에 마지막으로 아이콘 추가? for문 끝나고 나서 html에 붙혀주기 전에 next 넣는다.
+
+  if (page < totalPages) {
+    paginationHTML += `<li class="page-item" onclick="moveToPage(${
+      page + 1
+    })"><a class="page-link" href="#"> &gt; </a></li>
+        <li class="page-item" onclick="moveToPage(${totalPages})"><a class="page-link" href="#"> &gt;&gt; </a></li>`;
+  }
+  // paginationHTML += `<li class="page-item ${
+  //   page === totalPages ? "disabled" : ""
+  // }" onclick="moveToPage(${
+  //   page === totalPages ? page : page + 1
+  // })"><a class="page-link" href="#"> > </a></li><li class="page-item ${
+  //   page === totalPages ? "disabled" : ""
+  // }" onclick="moveToPage(${totalPages})"><a class="page-link" href="#"> >> </a></li>`; //next아이콘 뒤에 마지막으로 아이콘 추가? for문 끝나고 나서 html에 붙혀주기 전에 next 넣는다.
   document.querySelector(".pagination").innerHTML = paginationHTML;
 
   //첫페이지와 마지막 페이지로 가게 만드는 코드. for문 추가? 근데 위에 이전,다음 페이지에 아이콘을 추가하게 되면 새로운 for문은 필요 없을껀데
@@ -209,6 +243,8 @@ const errorRender = (errorMessage) => {
 
   document.getElementById("news-stand").innerHTML = errorHTML;
 };
+
+getLatestNews();
 
 //totalResult -> 주어짐, pagesize/page/groupsize -> 정함,
 //

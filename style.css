@@ -85,6 +85,10 @@
     padding-left : 20px;
   }
 
+  .pagination:hover{
+    cursor:pointer;
+  }
+
   @media (max-width:992px){
     .menus{
         display:none;
